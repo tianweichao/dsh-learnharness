@@ -1,0 +1,57 @@
+{
+  "name": "dsh-learnharness",
+  "version": "0.3.0",
+  "description": "LearnHarness 教学法的 DeepSeek Harness 插件：带承诺答案键的提问仪器、依赖图计划、自建作答卡与作答历史",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json",
+    "./client": {
+      "default": "./lib/client.js"
+    }
+  },
+  "files": [
+    "lib",
+    "skills",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-slots",
+        "@deepseek-ai/dsh-client-ui-tool",
+        "@deepseek-ai/dsh-client-ui-layout"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": "*",
+    "@deepseek-ai/schemastery": "*"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "learning",
+    "teaching",
+    "socratic",
+    "learnharness"
+  ],
+  "license": "AGPL-3.0",
+  "engines": {
+    "dsh": ">=0.2.0"
+  },
+  "scripts": {
+    "test": "node test/host-smoke.mjs"
+  }
+}
