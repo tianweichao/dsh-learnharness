@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1 — 2026-11-12
+
+- 修复 web boot 启动失败：0.3.0 改包名后 `lib/client.js` 仍以旧 id `@local/dsh-learnharness` 注册，与 boot graph 的 row id `dsh-learnharness` 不一致，回退重放时触发 `duplicate factory registration` → `1 entry did not activate`。注册 id 已改为 `dsh-learnharness`。
+- 从 0.3.0 直接升级即可，无需再手工打补丁。
+
 ## 0.3.0 — 2026-11-12
 
 首个公开版本。

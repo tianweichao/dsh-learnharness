@@ -1,6 +1,6 @@
 {
   "name": "dsh-learnharness",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "LearnHarness 教学法的 DeepSeek Harness 插件：带承诺答案键的提问仪器、依赖图计划、自建作答卡与作答历史",
   "type": "module",
   "main": "./lib/index.js",
