@@ -1,11 +1,8 @@
-# dsh-learnharness 的 profile patch 层。
-# 安装：在 ~/.dsh/profiles/desktop/package.json 的 dependencies 里加
-#   "@local/dsh-learnharness": "link:/Users/wt/dsh-plugins/dsh-learnharness"
-# 然后让这个 bundle 进 dsh.profile.bundles（或手动把下面这段 insert 粘到
-# profile 的 cordis.patch.yml 末尾）。改完 host 半要重启 DSH。
+# dsh-learnharness 的 bundle patch 层（随包发布，加进 profile 的
+# dsh.profile.bundles 后自动展开，不需要手改 profile 的 cordis.patch.yml）。
 - insert:
     - id: learnharness
-      name: '@local/dsh-learnharness'
+      name: 'dsh-learnharness'
       config:
-        waitTimeoutMs: 600000
+        pendingTtlMs: 43200000
         storeDir: ''
