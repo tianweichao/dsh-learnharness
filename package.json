@@ -48,8 +48,20 @@
     "learnharness"
   ],
   "license": "AGPL-3.0",
+  "author": "wt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tianweichao/dsh-learnharness.git"
+  },
+  "homepage": "https://github.com/tianweichao/dsh-learnharness#readme",
+  "bugs": {
+    "url": "https://github.com/tianweichao/dsh-learnharness/issues"
+  },
   "engines": {
     "dsh": ">=0.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "test": "node test/host-smoke.mjs"

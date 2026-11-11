@@ -81,18 +81,25 @@
 
 ## 安装
 
-```bash
-# 方式一：DSH 插件管理器（GUI）
-#   插件 → 本地插件目录 → 填绝对路径 → 安装
+| 方式 | 命令 |
+|---|---|
+| **npm 包**（可进 DSH 内置 Plugin Hub） | `dsh plugin --profile web add dsh-learnharness` |
+| **GitHub 源**（无需 npm） | `dsh plugin --profile web add github:tianweichao/dsh-learnharness` |
+| **本地目录** | `dsh plugin --profile web add /path/to/dsh-learnharness`，或 GUI：插件 → 本地插件目录 |
 
-# 方式二：CLI（仅限非桌面 profile）
-dsh plugin --profile web add /path/to/dsh-learnharness
+桌面版 profile 由 Electron 独占，CLI 不接管，请在 GUI 里安装（同一路径/包名）。
 
-# 方式三：从 git
-dsh plugin --profile web add https://github.com/<you>/dsh-learnharness
-```
+装完 **host 侧改动需要重启 DSH**；客户端 bundle 由 `dsh-client-hmr` 热替换，改完刷新页面（⌘R）即可。
 
-装完 **host 侧改动需要重启 DSH**（客户端 bundle 由 `dsh-client-hmr` 热替换，改完刷新页面即可）。
+### 兼容性
+
+| 项 | 值 |
+|---|---|
+| DSH | `>= 0.2.0`（在 `0.2.2-rc.1` 上开发与验证） |
+| 平台 | macOS / Linux / Windows（纯 Node 内置模块 + 浏览器 bundle，无原生依赖） |
+| 权限 | 只读写 `$DSH_HOME/learn/`，**不发起任何网络请求** |
+| 外部服务 | 无 |
+| 卸载 | 插件管理器移除，或从 `dsh.profile.bundles` 删掉；学习数据留在 `$DSH_HOME/learn/` |
 
 依赖：DSH `>= 0.2.0`。插件对 `@deepseek-ai/dsh-tools` / `schemastery` 的导入做了 try/catch：解析不到时用内置的 **DSL→JSON Schema 转换**兜底，两种路径都有测试覆盖。
 
