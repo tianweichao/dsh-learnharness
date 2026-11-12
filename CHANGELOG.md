@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.2 — 2026-11-13
+
+- 修复：作答历史被截断到 12 条 → 现在**有多少给多少**（`/state` 全量返回，前端全量渲染）
+- 修复：学习记录串台 —— 右侧栏「学习」页签按**会话严格绑定**，未绑定的对话不再退回
+  「最近修改的主题」，并显示「本对话还没有学习主题」提示
+- 测试新增：`历史不截断`、`未绑定会话看不到任何学习记录`、`bound:false` 标记
+
 ## 0.3.1 — 2026-11-12
 
 - 修复 web boot 启动失败：0.3.0 改包名后 `lib/client.js` 仍以旧 id `@local/dsh-learnharness` 注册，与 boot graph 的 row id `dsh-learnharness` 不一致，回退重放时触发 `duplicate factory registration` → `1 entry did not activate`。注册 id 已改为 `dsh-learnharness`。

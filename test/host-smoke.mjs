@@ -192,7 +192,7 @@ assert(posed.ok && posed.posed, '出题成功');
 const sameSession = await call('GET', '/api/learnharness/state?session=smoke-session');
 assert(sameSession.payload.topic.pending?.callId === 'call-session-scope', '本会话能看到这道题');
 const otherSession = await call('GET', '/api/learnharness/state?session=someone-else');
-assert(otherSession.payload.topic.pending === null, '别的会话看不到这道题（会话删了也不会残留）');
+assert(otherSession.payload.topic === null, '别的会话看不到这个主题的题（会话删了也不会残留）');
 
 /* ── 16. 超时未作答自动作废 ── */
 const { readFileSync: rf, writeFileSync: wf } = await import('node:fs');
@@ -236,5 +236,24 @@ assert(typeof latest.question === 'string' && latest.question.length > 0, '历�
 assert(Array.isArray(latest.selected), '历史里带学习者选择');
 assert(latest.correct === false || latest.correct === true, '历史里带对错');
 assert('thinking' in latest && 'confidence' in latest, '历史里带思路与置信度字段');
+
+/* ── 19. 历史不截断：有多少给多少 ── */
+const storeMod = await import('../lib/store.js');
+const histRoot = storeMod.resolveRoot('');
+for (let i = 0; i < 15; i += 1) {
+  storeMod.appendLog(histRoot, 'smoke-attn', {
+    callId: `bulk-${i}`, kind: 'quiz', question: `批量题 ${i}`, selected: ['A'],
+    correct: true, confidence: 50, thinking: '', answeredAt: new Date().toISOString(),
+  });
+}
+const bulkState = await call('GET', '/api/learnharness/state?session=smoke-session');
+assert((bulkState.payload.topic.history ?? []).length >= 15, '历史不截断，有多少给多少');
+
+/* ── 20. 未绑定会话不串主题 ── */
+const unbound = await call('GET', '/api/learnharness/state?session=never-bound-session');
+assert(unbound.payload.ok && unbound.payload.topic === null, '未绑定会话看不到任何学习记录');
+assert(unbound.payload.bound === false, '并明确标记 bound:false');
+const boundAgain = await call('GET', '/api/learnharness/state?session=smoke-session');
+assert(boundAgain.payload.topic?.slug === 'smoke-attn', '已绑定会话只看到自己的主题');
 
 console.log('\n[smoke] 全部通过');
